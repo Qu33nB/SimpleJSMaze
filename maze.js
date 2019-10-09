@@ -1,4 +1,4 @@
-const map = [
+const mapArray = [
     "WWWWWWWWWWWWWWWWWWWWW",
     "W   W     W     W W W",
     "W W W WWW WWWWW W W W",
@@ -11,14 +11,69 @@ const map = [
     "S     W W W W W W WWW",
     "WWWWW W W W W W W W W",
     "W     W W W   W W W W",
-    "W WWWWWWW WWWWW W W W",
+    "W WWWWW W WWWWW W W W",
     "W       W       W   W",
     "WWWWWWWWWWWWWWWWWWWWW",
 ];
-// Guidance
 
-// Make each cell of the maze a DIV.
-// Make each row of the maze a DIV using "display: flex;"
+let maze = document.getElementById('maze');
+// let start = document.getElementsByClassName('start');
+let row, rows, cell, cells, player;
+let mazeTop = 200;
+let mazeLeft = 200;
+
+document.addEventListener('keydown', movePlayer);
+
+function movePlayer(event) {
+
+    if (event.keyCode === 40) {
+        maze.style.top = (mazeTop += 10) + "px";
+    } else if (event.keyCode === 38) {
+        maze.style.top = (mazeTop -= 10) + "px";
+    } else if (event.keyCode === 39) {
+        maze.style.left = (mazeLeft += 10) + "px";
+    } else if (event.keyCode === 37) {
+        maze.style.left = (mazeLeft -= 10) + "px";
+    }
+}
+
+function createGameboard() {
+    for (rows of mapArray) {
+        row = document.createElement('div');
+        row.classList.add('row');
+        maze.appendChild(row);
+        for (cells of rows.split('')) {
+            cell = document.createElement('div');
+            cell.classList.add('cell')
+            cell.innerHTML = cells;
+            row.appendChild(cell)
+            console.log(cell)
+            defineCells()
+        }
+    }
+}
+createGameboard();
+
+function defineCells() {
+    if(cell.innerHTML === 'W') {
+        cell.classList.add('wall');
+    } else if(cell.innerHTML === 'S') {
+        cell.id = 'start';
+        cell.classList.add('start');
+    } else if(cell.innerHTML === 'F') {
+        cell.classList.add('finish')
+    } else {
+        cell.classList.add('floor')
+    }
+}
+
+function addPlayer() {
+    player = document.createElement('img');
+    player.src = 'images/Honeybee.gif'
+    player.classList.add('player');
+    document.getElementById('start').appendChild(player);
+}
+addPlayer()
 // Either A) use an absolutely-positioned DIV to represent the player's current position in the maze, or B) have your player DIV appended to a cell DIV for the same reason.
 // You need to keep track of (or retrieve on demand) the player's current position in the maze (row index and column index). You could do this one of several ways. You could keep a persistent record of the player's position in, say, a global array or object whose sole job is keeping track of the player's current position. You could constantly update your map array to reflect your player's movement (move the "S" around). You could keep your indexes in data attributes in your HTML and access them through player DIV's "parentElement" property (in the case of 3B). Or you could do a little math on the player DIV's current position on the screen, relative to the start element's current position on the screen and the size of your cells (in the case of 3A).
 // Movement can be performed a couple different ways: In the case of 3A, change the absolute position of the player DIV. Or, in the case of 3B, append the player DIV to the next cell DIV. (You could use "document.querySelector()", and the CSS selector for attributes to get the next cell element by the indexes you set on it via data attributes.)
