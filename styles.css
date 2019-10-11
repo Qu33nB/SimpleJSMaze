@@ -7,21 +7,21 @@ body {
 
 #maze {
     border: 5px solid black;
-    width: 700px;
+    width: 630px;
     height: 525px;
     background: #abdccd;
 }
 
 .row {
     display: flex;
-    width: 700px;
+    width: 630px;
     height: 35px;
     white-space: pre;
 }
 
 .cell {
     white-space: pre;
-    width: 34px;
+    width: 30px;
     height: 35px;
 }
 
