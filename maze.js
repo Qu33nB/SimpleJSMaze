@@ -20,10 +20,13 @@ let maze = document.getElementById('maze');
 // let start = document.getElementsByClassName('start');
 let row, rows, cell, cells, player;
 let playerClass = document.getElementsByClassName('player');
-let playerTop = 20;
-let playerLeft = 2;
+let playerTop = 0;
+let playerLeft = 0;
+let playerRow = 10;
+let playerColumn = 0;
 
 document.addEventListener('keydown', movePlayer);
+
 function createGameboard() {
     for (rows of mapArray) {
         row = document.createElement('div');
@@ -42,14 +45,14 @@ function createGameboard() {
 createGameboard();
 
 function defineCells() {
-    if(cell.innerHTML === 'W') {
+    if (cell.innerHTML === 'W') {
         cell.classList.add('wall');
         cell.innerHTML = '';
-    } else if(cell.innerHTML === 'S') {
+    } else if (cell.innerHTML === 'S') {
         cell.id = 'start';
         cell.classList.add('start');
         cell.innerHTML = '';
-    } else if(cell.innerHTML === 'F') {
+    } else if (cell.innerHTML === 'F') {
         cell.classList.add('finish')
         cell.innerHTML = '';
     } else {
@@ -69,13 +72,25 @@ addPlayer();
 function movePlayer(event) {
 
     if (event.keyCode === 40) {
-        player.style.top = (playerTop += 2) + "em";
+        if (mapArray[playerRow + 1][playerColumn] === 'W') {
+            player.style.top = (playerTop += 35) + "px";
+            playerRow += 1;
+        }
     } else if (event.keyCode === 38) {
-        player.style.top = (playerTop -= 2) + "em";
+        if (mapArray[playerRow - 1][playerColumn] === 'W') {
+            player.style.top = (playerTop -= 35) + "px";
+            playerRow -= 1;
+        }
     } else if (event.keyCode === 39) {
-        player.style.left = (playerLeft += 2) + "em";
+        if (mapArray[playerRow][playerColumn + 1] === 'W') {
+            player.style.left = (playerLeft += 34) + "px";
+            playerColumn += 1;
+        }
     } else if (event.keyCode === 37) {
-        player.style.left = (playerLeft -= 2) + "em";
+        if (mapArray[playerRow][playerColumn - 1] === 'W') {
+            player.style.left = (playerLeft -= 34) + "px";
+            playerColumn -= 1;
+        }
     }
 }
 
